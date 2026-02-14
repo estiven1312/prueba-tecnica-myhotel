@@ -32,6 +32,23 @@ formatos (CSV, XLSX) sin modificar la lógica de consultas, utilizando un patró
 debido a que se consideró que en un entorno real, la exportación a otros formatos es una necesidad común y se quiso
 demostrar la capacidad de diseñar un sistema extensible desde el inicio.
 
+Con respecto a los puntos:
+
+**3. Información del empleado con mayor sueldo de cada departamento:**
+Se implementó la consulta usando `DENSE_RANK()` para manejar casos de empates en sueldos, asegurando que se
+devuelvan todos los empleados que compartan el sueldo más alto en cada departamento. Esto garantiza que la
+información sea precisa y completa, incluso en situaciones donde varios empleados tengan el mismo sueldo máximo.
+
+**4. Información de los gerentes que hayan sido contratados hace más de 15 años.**
+
+Se tomó la decisión de realizar el filtro de `GERENTES` usando el filtro
+` WHERE UPPER(TRIM(j.JOB_TITLE)) LIKE '%MANAGER%'`.
+Se consideró problemático el uso de la columna `MANAGER_ID` en la tabla employees para identificar a los gerentes, ya
+que esta columna puede contener valores `0` (para empleados sin gerente) o valores que no correspondan exclusivamente
+a gerentes (por ejemplo, aparece en la data un VICEPRESIDENTE). Al filtrar por el
+título del trabajo, se asegura que solo se incluyan aquellos empleados cuyo título indique claramente que son gerentes (
+`MANAGER`), lo que proporciona una identificación más precisa y confiable de los gerentes en la base de datos.
+
 ## Puntos de mejora
 
 - Implementar pruebas unitarias y de integración para asegurar la calidad del código.
