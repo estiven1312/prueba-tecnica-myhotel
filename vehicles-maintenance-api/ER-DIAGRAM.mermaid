@@ -1,0 +1,61 @@
+erDiagram
+    VEHICLES {
+        BIGINT id PK "Auto-increment"
+        VARCHAR brand "NOT NULL"
+        VARCHAR model "NOT NULL"
+        VARCHAR license_plate "NOT NULL, UNIQUE"
+        BIGINT year "NOT NULL"
+        VARCHAR vehicle_type "NOT NULL, ENUM: AUTOMOBILE, LORRY"
+        DECIMAL cubic_capacity "NOT NULL"
+        DECIMAL mileage "NOT NULL"
+        VARCHAR url_photo "NULL"
+        TIMESTAMP created_at "NOT NULL"
+        TIMESTAMP updated_at "NULL"
+        VARCHAR created_by "NULL"
+        VARCHAR updated_by "NULL"
+        TIMESTAMP deleted_at "NULL"
+        VARCHAR deleted_by "NULL"
+    }
+
+    AUTOMOBILES {
+        BIGINT id PK "FK -> VEHICLES"
+        VARCHAR automobile_type "NOT NULL, ENUM: SEDAN, HATCHBACK, SUV, COUPE, CONVERTIBLE"
+        BIGINT number_of_doors "NOT NULL"
+        BIGINT passenger_capacity "NOT NULL"
+        BIGINT trunk_capacity "NOT NULL"
+    }
+
+    LORRIES {
+        BIGINT id PK "FK -> VEHICLES"
+        VARCHAR lorry_type "NOT NULL, ENUM: TYPE_THREE_QUARTER, TRAILER, SEMI_TRAILER, TANKER, DUMP, REFRIGERATED"
+        BIGINT axis_number "NOT NULL"
+        BIGINT tonnage_capacity "NOT NULL"
+    }
+
+    MAINTENANCES {
+        BIGINT id PK "Auto-increment"
+        BIGINT vehicle_id "NOT NULL"
+        VARCHAR description "NOT NULL, max 500"
+        DATE scheduled_date "NOT NULL"
+        TIMESTAMP start_date_time "NULL"
+        TIMESTAMP end_date_time "NULL"
+        DECIMAL kilometers_at_maintenance "NULL, precision 10 scale 2"
+        VARCHAR engine_status "NULL, ENUM: GOOD, NEEDS_ATTENTION, REPLACE"
+        VARCHAR brakes_status "NULL, ENUM: GOOD, NEEDS_ATTENTION, REPLACE"
+        VARCHAR tires_status "NULL, ENUM: GOOD, NEEDS_ATTENTION, REPLACE"
+        VARCHAR transmission_status "NULL, ENUM: GOOD, NEEDS_ATTENTION, REPLACE"
+        VARCHAR electrical_status "NULL, ENUM: GOOD, NEEDS_ATTENTION, REPLACE"
+        VARCHAR type "NOT NULL, ENUM: OIL_CHANGE, TIRE_ROTATION, BRAKE_INSPECTION, ENGINE_TUNING, OTHER"
+        VARCHAR comments "NULL, max 1000"
+        VARCHAR status "NOT NULL, ENUM: SCHEDULED, IN_PROGRESS, COMPLETED, CANCELED"
+        TIMESTAMP created_at "NOT NULL"
+        TIMESTAMP updated_at "NULL"
+        VARCHAR created_by "NULL"
+        VARCHAR updated_by "NULL"
+        TIMESTAMP deleted_at "NULL"
+        VARCHAR deleted_by "NULL"
+    }
+
+    VEHICLES ||--o| AUTOMOBILES : "is-a (herencia)"
+    VEHICLES ||--o| LORRIES : "is-a (herencia)"
+    VEHICLES ||--o{ MAINTENANCES : "has many (1:N)"

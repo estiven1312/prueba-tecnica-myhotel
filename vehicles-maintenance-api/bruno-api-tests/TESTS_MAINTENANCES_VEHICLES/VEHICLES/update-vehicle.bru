@@ -1,0 +1,32 @@
+meta {
+  name: update-vehicle
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/api/v1/vehicles/6
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vehicleType": "LORRY",
+    "brand": "Mercedes-Benz1",
+    "model": "Actros",
+    "licensePlate": "GHI-321",
+    "year": 2024,
+    "cubicCapacity": 12800,
+    "mileage": 10000,
+    "urlPhoto": "https://example.com/photos/mb-actros.jpg",
+    "lorryType": "TANKER",
+    "axisNumber": 4,
+    "tonnageCapacity": 30000
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

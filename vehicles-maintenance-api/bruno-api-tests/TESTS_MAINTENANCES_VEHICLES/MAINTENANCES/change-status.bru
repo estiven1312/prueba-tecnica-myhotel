@@ -1,0 +1,22 @@
+meta {
+  name: change-status
+  type: http
+  seq: 6
+}
+
+patch {
+  url: http://localhost:8080/api/v1/maintenances/1/status
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "status": "COMPLETED"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

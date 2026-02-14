@@ -1,0 +1,31 @@
+meta {
+  name: UPDATE-MAINTENANCE
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:8080/api/v1/maintenances/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "description": "Cambio de aceite y filtro de aire",
+    "scheduledDate": "2026-03-15",
+    "kilometersAtMaintenance": 15000.5,
+    "engineStatus": "GOOD",
+    "brakesStatus": "GOOD",
+    "tiresStatus": "NEEDS_ATTENTION",
+    "transmissionStatus": "GOOD",
+    "electricalStatus": "GOOD",
+    "type": "OIL_CHANGE",
+    "comments": "Se recomienda revisar el nivel de líquido de frenos"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

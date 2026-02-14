@@ -1,0 +1,33 @@
+meta {
+  name: REGISTER-MAINTENANCE
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/v1/maintenances
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vehicleId": 2,
+    "type": "TIRE_ROTATION",
+    "description": "TIRE ROTATION PROBLEM",
+    "scheduledDate": "2026-03-16",
+    "engineStatus": "NEEDS_ATTENTION",
+    "brakesStatus": "NEEDS_ATTENTION",
+    "tiresStatus": "NEEDS_ATTENTION",
+    "transmissionStatus": "GOOD",
+    "electricalStatus": "GOOD",
+    "estimatedCost": 5000.00,
+    "kilometersAtMaintenance": 4500,
+    "comments": "Se recomienda revisar la salida de aceite"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "TESTS_MAINTENANCES_VEHICLES",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
