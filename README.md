@@ -17,6 +17,7 @@ Repositorio con 3 iniciativas relacionadas a backend y base de datos en Java/Spr
 	- Spring Boot (MVC + JDBC)
 	- MySQL
 	- OpenAPI (springdoc)
+- Usa el archivo `.sql` proporcionado como dump en el enunciado del reto técnico.
 
 ### 3) API de mantenimiento de vehículos
 - Carpeta: **vehicles-maintenance-api/**
