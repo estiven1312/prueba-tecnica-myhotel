@@ -36,7 +36,7 @@ Se adopta una arquitectura en capas (Controller/Service/Repository) en lugar de 
 - Menor sobrecarga estructural y menor tiempo de implementación.
 - Cambios futuros en el esquema podrían requerir ajustes directos en la capa Repository.
 
-### ADR 0002: JDBC sobre JPA/ORM
+### ADR-2: JDBC sobre JPA/ORM
 
 **Contexto**
 
@@ -59,7 +59,7 @@ Se utiliza Spring JDBC con `JdbcTemplate` en lugar de JPA/ORM.
 - Se mantiene control explícito de las consultas y su performance.
 - Si en el futuro se requiere un modelo de dominio rico, se puede reconsiderar JPA.
 
-### ADR 0003: Exportacion en multiples formatos (JSON/CSV/XLSX)
+### ADR-3: Exportacion en multiples formatos (JSON/CSV/XLSX)
 
 **Contexto**
 
