@@ -5,6 +5,7 @@ Base URL local (segun configuracion actual):
 ```bash
 BASE_URL="http://localhost:8080/api/v1"
 ```
+
 ## Swagger
 
 Si la aplicacion esta en ejecucion, Swagger UI se encuentra en:
@@ -64,6 +65,9 @@ curl -X GET "$BASE_URL/vehicles/1"
 
 ### Actualizar vehiculo (automovil)
 
+Una vez creado el vehiculo, se puede actualizar su informacion (excepto el tipo) usando su ID. En este ejemplo se
+actualiza un automovil, pero se puede hacer lo mismo con un camion cambiando los campos correspondientes.
+
 ```bash
 curl -X PUT "$BASE_URL/vehicles/1" \
   -H "Content-Type: application/json" \
@@ -84,6 +88,11 @@ curl -X PUT "$BASE_URL/vehicles/1" \
 ```
 
 ### Eliminar vehiculo
+
+Se utiliza eliminación lógica, por lo que el vehículo no se borra físicamente de la base de datos, sino que se marca
+como eliminado. Esto permite mantener un historial completo de los datos sin perder información importante. Para
+eliminar un vehículo, se debe proporcionar el ID del vehículo y un header `X-User` con el nombre del usuario que realiza
+la eliminación (esto es para fines de auditoría).
 
 ```bash
 curl -X DELETE "$BASE_URL/vehicles/1" \
