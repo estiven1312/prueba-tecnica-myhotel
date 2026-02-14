@@ -37,7 +37,20 @@ Repositorio con 3 iniciativas relacionadas a backend y base de datos en Java/Spr
 
 ## Levantar cada componente
 
-### A. Base MySQL para `reports-hr-project`
+### 1.Uso de docker-compose
+
+En cada proyecto se encuentra un archivo docker-compose.yml.
+
+Primero deberá usar el comando `./gradlew bootRun` en cada carpeta de proyecto, sea `reports-hr-project` o `vehicles-maintenance-api` para generar los builds que necesita cada docker-compose.
+
+Segundo debe usar el comando `docker compose up -d --build`. Con ello será suficiente y levantará ambos proyectos
+
+### 2.Usando gradlew o IDEs
+
+Si desea agregar una nueva funcionalidad, puede levantar cada BD de manera independiente, solo 
+asegurese de que no tiene los puertos necesarios ocupados.
+
+#### A. Base MySQL para `reports-hr-project`
 
 Desde la carpeta `reports-hr-project/development`:
 
@@ -46,7 +59,7 @@ Desde la carpeta `reports-hr-project/development`:
 - Usuario: `myuser`
 - Password: `mypassword`
 
-### B. Base MySQL para `vehicles-maintenance-api`
+#### B. Base MySQL para `vehicles-maintenance-api`
 
 Desde la carpeta `vehicles-maintenance-api/development`:
 
@@ -55,15 +68,15 @@ Desde la carpeta `vehicles-maintenance-api/development`:
 - Usuario: `testuser`
 - Password: `testpassword`
 
-### C. Ejecutar los servicios
+#### C. Ejecutar los servicios
 
-#### reports-hr-project
+##### reports-hr-project
 - Context path: `/api/v1`
-- Puerto HTTP: `8081`
+- Puerto HTTP: `8080`
 
 Ejecutar desde la carpeta `reports-hr-project` usando `./gradlew bootRun`.
 
-#### vehicles-maintenance-api
+##### vehicles-maintenance-api
 - Context path: `/api/v1`
 - Puerto HTTP por defecto de Spring Boot: `8080`
 
@@ -73,10 +86,10 @@ Ejecutar desde la carpeta `vehicles-maintenance-api` usando `./gradlew bootRun`.
 
 - Reportes RRHH (detalle): `reports-hr-project/README.md`
 - API Vehículos (detalle): `vehicles-maintenance-api/README.md`
-- Arquitectura de reportes: `reports-hr-project/docs/ARCHITECTURE.md`
 - Scripts SQL de apoyo: `bd-myhotel/solutions.sql`
 
 ## Notas
 
 - Si ejecutas ambos servicios en paralelo, no hay conflicto de puertos HTTP (`8080` y `8081`).
 - Las dos bases MySQL están separadas para evitar mezcla de datos y facilitar pruebas locales.
+- Revisar las configuraciones de cada proyecto, cada uno cuenta con un docker-compose que facilita probar en un entorno local.
