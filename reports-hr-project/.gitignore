@@ -35,14 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/application.yaml
 
-### Local config/env ###
-/src/main/resources/application.properties
-/src/main/resources/application-local.yaml
-/src/main/resources/application-local.yml
-/src/main/resources/application-dev.yaml
-/src/main/resources/application-dev.yml
+### Local config/env overrides ###
 .env
 .env.*
 

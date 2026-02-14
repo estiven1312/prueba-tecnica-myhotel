@@ -1,0 +1,58 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hr_department_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3308:3306"
+    volumes:
+      - hr_department_db:/var/lib/mysql
+      - ./development/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - reports_net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - JAR_FILE=build/libs/reports-hr-project.jar
+    container_name: reports_hr_app
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://hr_department_mysql:3306/mydatabase?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      JAVA_OPTS: ${JAVA_OPTS:-}
+    ports:
+      - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test:
+        ["CMD", "sh", "-c", "wget -qO- http://localhost:8080/api/v1/actuator/health | grep -q '\"status\":\"UP\"'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - reports_net
+
+volumes:
+  hr_department_db:
+
+networks:
+  reports_net:
+    driver: bridge

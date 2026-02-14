@@ -12,7 +12,8 @@ Rutas (todas con `GET`):
 - `/reports/departments/top-earners` - empleado(s) con mayor salario por departamento.
 - `/reports/managers?minYears=15` - managers con antigüedad mayor al mínimo indicado.
 - `/reports/departments/salary-summary?minEmployees=10` - resumen de empleados y salario promedio por departamento.
-- `/reports/countries/salary-summary` - resumen salarial por país (promedio, máximo, mínimo y años promedio de actividad).
+- `/reports/countries/salary-summary` - resumen salarial por país (promedio, máximo, mínimo y años promedio de
+  actividad).
 
 ## ADR - Architectural Decision Records
 
@@ -20,7 +21,9 @@ Rutas (todas con `GET`):
 
 **Contexto**
 
-El sistema es un servicio de reportes centrado en consultas a una base de datos relacional tipo HR. El esquema es estable, conocido y no se espera que cambie con frecuencia. El flujo principal es lectura (reportes), sin escrituras intensivas ni lógica de negocio compleja.
+El sistema es un servicio de reportes centrado en consultas a una base de datos relacional tipo HR. El esquema es
+estable, conocido y no se espera que cambie con frecuencia. El flujo principal es lectura (reportes), sin escrituras
+intensivas ni lógica de negocio compleja.
 
 **Decisión**
 
@@ -29,7 +32,8 @@ Se adopta una arquitectura en capas (Controller/Service/Repository) en lugar de 
 **Justificación**
 
 - La arquitectura en capas es suficiente para el alcance actual y reduce complejidad innecesaria.
-- El esquema HR es estable y bien conocido, por lo que la separación adicional de dominios y adaptadores aporta poco valor.
+- El esquema HR es estable y bien conocido, por lo que la separación adicional de dominios y adaptadores aporta poco
+  valor.
 
 **Consecuencias**
 
@@ -40,7 +44,9 @@ Se adopta una arquitectura en capas (Controller/Service/Repository) en lugar de 
 
 **Contexto**
 
-El sistema requiere ejecutar consultas SQL específicas y directas para reportes. No se gestionan entidades con relaciones complejas ni se requiere sincronización de objetos en memoria. El enfoque es de lectura y consultas agregadas.
+El sistema requiere ejecutar consultas SQL específicas y directas para reportes. No se gestionan entidades con
+relaciones complejas ni se requiere sincronización de objetos en memoria. El enfoque es de lectura y consultas
+agregadas.
 
 **Decisión**
 
@@ -63,11 +69,13 @@ Se utiliza Spring JDBC con `JdbcTemplate` en lugar de JPA/ORM.
 
 **Contexto**
 
-Los reportes deben consumirse tanto por integraciones (JSON) como por usuarios que requieren descargar archivos (CSV/XLSX). Se necesita un mecanismo simple para escoger el formato sin duplicar la logica de consultas.
+Los reportes deben consumirse tanto por integraciones (JSON) como por usuarios que requieren descargar archivos (
+CSV/XLSX). Se necesita un mecanismo simple para escoger el formato sin duplicar la logica de consultas.
 
 **Decision**
 
-Se define un header `X-Report-Format` para seleccionar el formato y se utiliza un `ReportExportFacade` con estrategias de exportacion por formato.
+Se define un header `X-Report-Format` para seleccionar el formato y se utiliza un `ReportExportFacade` con estrategias
+de exportacion por formato.
 
 **Justificacion**
 
@@ -77,30 +85,60 @@ Se define un header `X-Report-Format` para seleccionar el formato y se utiliza u
 
 **Consecuencias**
 
-- Las exportaciones agregan dependencias ligeras (OpenCSV y Apache POI).
+- Las exportaciones agregan dependencias externas (OpenCSV y Apache POI).
 - Si se agrega un nuevo formato, basta implementar `ReportExportStrategy`.
 
 ## DISEÑO DE FACADE Y STRATEGIES PARA EXPORTACION
 
 **Objetivo**
 
-Unificar la exportacion de reportes en distintos formatos (JSON/CSV/XLSX) sin duplicar la logica de consultas ni el armado de filas.
+Unificar la exportacion de reportes en distintos formatos (JSON/CSV/XLSX) teniendo en consideración que cada formato
+puede tener requerimientos para las filas (tipos de datos, formatos de fecha, etc) y que se quiere evitar duplicar la
+logica de consulta en cada controller.
 
 **Estructura**
 
 - `ReportExportStrategy` define el contrato comun de exportacion (mismos metodos para cada reporte).
 - `CsvExportService` y `XlsxExportService` implementan `ReportExportStrategy` y conocen como generar cada formato.
-- `ReportExportFacade` recibe el `ReportFormat` y delega al strategy correcto.
+- `ReportExportFacade` recibe el `ReportFormat` y delega al strategy correcto. Inyecta las dependencias necesarias (
+  servicios de exportacion) y centraliza la logica de seleccion.
 
 **Flujo**
 
 1. El controller obtiene las filas (JSON por defecto).
 2. Si existe header `X-Report-Format`, el facade selecciona el strategy correspondiente.
-3. El strategy devuelve `byte[]` y metadatos (content-type/ext).
+3. El strategy devuelve `byte[]` y metadatos (content-type/ext), en caso X-REPORT-FORMAT sea correcto.
 4. El controller responde con JSON o archivo descargable segun formato.
 
 **Beneficios**
 
-- Agregar un nuevo formato requiere solo una nueva implementacion de `ReportExportStrategy`.
+- Agregar un nuevo formato requiere solo una nueva implementacion de `ReportExportStrategy` y `ReportFormat`.
 - Se evita duplicar logica en los controllers.
 - La seleccion de formato queda centralizada y probada en una sola clase.
+
+## DIAGRAMA DE COMPONENTES
+
+```mermaid
+flowchart LR
+    client[HTTP REQUESTS]
+
+    subgraph app[Spring Boot App]
+        controller[ReportsController]
+        service[ReportService]
+        facade[ReportExportFacade]
+        strategy[ReportExportStrategy]
+        csv[CsvExportService]
+        xlsx[XlsxExportService]
+        repo[ReportRepository]
+    end
+
+    db[(MySQL HR)]
+    client --> controller
+    controller --> service
+    service --> repo
+    repo --> db
+    controller --> facade
+    facade --> strategy
+    strategy --> csv
+    strategy --> xlsx
+```

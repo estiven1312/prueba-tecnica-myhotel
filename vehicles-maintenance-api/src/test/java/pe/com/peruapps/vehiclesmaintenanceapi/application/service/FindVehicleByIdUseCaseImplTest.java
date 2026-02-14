@@ -25,7 +25,7 @@ class FindVehicleByIdUseCaseImplTest {
   @InjectMocks private FindVehicleByIdUseCaseImpl findVehicleByIdUseCase;
 
   @Test
-  void givenExistingVehicleId_whenExecute_thenVehicleIsReturned() {
+  void givenExistingVehicleIdWhenExecuteThenVehicleIsReturned() {
     // Given
     Long vehicleId = 1L;
     Automobile expectedVehicle = new Automobile();
@@ -49,7 +49,7 @@ class FindVehicleByIdUseCaseImplTest {
   }
 
   @Test
-  void givenNonExistingVehicleId_whenExecute_thenThrowsVehicleNotFoundException() {
+  void givenNonExistingVehicleIdWhenExecuteThenThrowsVehicleNotFoundException() {
     // Given
     Long nonExistingId = 999L;
     when(vehicleRepositoryPort.findById(nonExistingId))

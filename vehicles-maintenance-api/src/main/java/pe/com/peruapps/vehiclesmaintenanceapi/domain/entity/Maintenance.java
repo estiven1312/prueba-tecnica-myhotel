@@ -49,9 +49,9 @@ public class Maintenance {
       String comments,
       Status status) {
     this.id = id;
-    this.vehicleId = Objects.requireNonNull(vehicleId);
+    this.vehicleId = Objects.requireNonNull(vehicleId, "Vehicle ID cannot be null");
     this.description = description;
-    setScheduledDate(Objects.requireNonNull(scheduledDate));
+    setScheduledDate(Objects.requireNonNull(scheduledDate, "Scheduled date cannot be null"));
     this.startDateTime = startDateTime;
     this.endDateTime = endDateTime;
     this.kilometersAtMaintenance = kilometersAtMaintenance;

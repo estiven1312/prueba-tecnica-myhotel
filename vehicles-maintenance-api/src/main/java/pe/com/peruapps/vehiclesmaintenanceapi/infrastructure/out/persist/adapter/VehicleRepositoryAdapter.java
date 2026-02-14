@@ -73,7 +73,7 @@ public class VehicleRepositoryAdapter implements VehicleRepositoryPort {
   public void deleteById(Long id, String deletedBy) {
     var entity =
         jpaRepository
-            .findById(id)
+            .findByIdAndDeletedAtIsNull(id)
             .orElseThrow(
                 () -> new VehicleNotFoundException(id, "Vehicle not found with id: " + id));
     entity.softDelete(deletedBy);

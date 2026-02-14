@@ -1,0 +1,24 @@
+%% Architecture component diagram for Vehicles Maintenance API
+flowchart LR
+  subgraph APP[Application Layer]
+    UC[Use Cases]
+    IN[Input Ports]
+    OUT[Output Ports]
+  end
+
+  subgraph DOMAIN[Domain Layer]
+    ENT[Entities]
+    RULES[Domain Rules]
+  end
+
+  subgraph INFRA[Infrastructure Layer]
+    REPO[Repository Adapters]
+    EXT[External Integrations]
+  end
+
+  UC --> IN
+  UC --> OUT
+  IN --> DOMAIN
+  OUT --> REPO
+  REPO --> DOMAIN
+  EXT --> OUT

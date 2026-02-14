@@ -22,27 +22,25 @@ Existen dos formas de ejecutar la aplicación:
 Esta opción ejecuta tanto la base de datos MySQL como la aplicación en contenedores Docker.
 
 ```bash
-# Construir y levantar todos los servicios
-docker-compose up --build
+# 1) Generar el JAR
+./gradlew bootJar
 
-# O en modo detached (background)
-docker-compose up -d --build
+# 2) Construir y levantar todos los servicios
+docker compose up --build -d
 
-# Ver logs
-docker-compose logs -f app
+# 3) Verificar que los servicios estén corriendo
+docker compose ps
 
 # Detener los servicios
-docker-compose down
+docker compose down
 
 # Detener y eliminar volúmenes (limpieza completa)
-docker-compose down -v
+docker compose down -v
 ```
 
-**Salida esperada:**
-```
-✔ Container vehicles-maintenance-mysql  Started
-✔ Container vehicles-maintenance-app    Started
-```
+**Nota:**
+- El `Dockerfile` usa un JAR precompilado (`build/libs/vehicles-maintenance-api.jar`).
+- El `docker-compose.yml` pasa ese path con `build.args.JAR_FILE`.
 
 La aplicación estará disponible en `http://localhost:8080/api/v1`
 
@@ -136,11 +134,14 @@ http://localhost:8080/api/v1/swagger-ui.html
 
 El `Dockerfile` **no compila** la aplicación. Debes generar el JAR antes de construir la imagen.
 
+¿Por qué? Esto permite separar el proceso de build del runtime, lo que es una buena práctica para optimizar las capas de la imagen Docker.
+Esto es especialmente util en entornos de CI/CD, donde el build es un proceso del pipeline, como consecuencia, el Dockerfile se enfoca solo en empaquetar el artefacto ya construido, lo que mejora la eficiencia y la velocidad de construcción de la imagen.
+
 ```bash
 ./gradlew bootJar
 ```
 
-El artefacto esperado es `build/libs/*.jar`.
+El artefacto esperado es `build/libs/vehicles-maintenance-api.jar`.
 
 ### Construcción de imagen
 

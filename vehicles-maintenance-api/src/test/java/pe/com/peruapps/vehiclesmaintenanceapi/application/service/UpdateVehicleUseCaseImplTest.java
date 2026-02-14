@@ -63,7 +63,7 @@ class UpdateVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenValidAutomobileUpdate_whenExecute_thenAutomobileIsUpdated() {
+  void givenValidAutomobileUpdateWhenExecuteThenAutomobileIsUpdated() {
     // Given
     UpdateAutomobileCommand command =
         new UpdateAutomobileCommand(
@@ -97,7 +97,7 @@ class UpdateVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenValidLorryUpdate_whenExecute_thenLorryIsUpdated() {
+  void givenValidLorryUpdateWhenExecuteThenLorryIsUpdated() {
     // Given
     UpdateLorryCommand command =
         new UpdateLorryCommand(
@@ -130,7 +130,7 @@ class UpdateVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenDifferentVehicleType_whenExecute_thenThrowsForbiddenChangeVehicleTypeException() {
+  void givenDifferentVehicleTypeWhenExecuteThenThrowsForbiddenChangeVehicleTypeException() {
     // Given
     UpdateLorryCommand command =
         new UpdateLorryCommand(
@@ -158,7 +158,7 @@ class UpdateVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenDuplicatedLicensePlate_whenExecute_thenThrowsDuplicatedLicensePlateException() {
+  void givenDuplicatedLicensePlateWhenExecuteThenThrowsDuplicatedLicensePlateException() {
     // Given
     UpdateAutomobileCommand command =
         new UpdateAutomobileCommand(
@@ -194,7 +194,7 @@ class UpdateVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenSameLicensePlate_whenExecute_thenVehicleIsUpdatedWithoutValidation() {
+  void givenSameLicensePlateWhenExecuteThenVehicleIsUpdatedWithoutValidation() {
     // Given
     UpdateAutomobileCommand command =
         new UpdateAutomobileCommand(

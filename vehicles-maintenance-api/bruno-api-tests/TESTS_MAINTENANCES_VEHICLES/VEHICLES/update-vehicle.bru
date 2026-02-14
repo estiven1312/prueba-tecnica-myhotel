@@ -5,25 +5,26 @@ meta {
 }
 
 put {
-  url: http://localhost:8080/api/v1/vehicles/6
+  url: http://localhost:8080/api/v1/vehicles/7
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "vehicleType": "LORRY",
-    "brand": "Mercedes-Benz1",
-    "model": "Actros",
-    "licensePlate": "GHI-321",
-    "year": 2024,
-    "cubicCapacity": 12800,
-    "mileage": 10000,
-    "urlPhoto": "https://example.com/photos/mb-actros.jpg",
-    "lorryType": "TANKER",
-    "axisNumber": 4,
-    "tonnageCapacity": 30000
-  }
+      "brand": "Toyota",
+      "model": "Corolla",
+      "licensePlate": "ABC-123",
+      "year": 2024,
+      "vehicleType": "LORRY",
+      "cubicCapacity": 1800.00,
+      "mileage": 5500.00,
+      "urlPhoto": "https://example.com/photos/toyota-corolla.jpg",
+      "automobileType": "SEDAN",
+      "numberOfDoors": 4,
+      "passengerCapacity": 5,
+      "trunkCapacity": 450
+    }
 }
 
 settings {

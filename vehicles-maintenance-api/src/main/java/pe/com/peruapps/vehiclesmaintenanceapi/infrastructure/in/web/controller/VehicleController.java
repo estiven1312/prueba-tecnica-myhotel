@@ -184,7 +184,7 @@ public class VehicleController {
             content = @Content(schema = @Schema(implementation = PageResult.class)))
       })
   @GetMapping
-  public ResponseEntity<PageResult<VehicleResponse>> getAllVehicles(
+  public ResponseEntity<PageResult<VehicleResponse>> filterVehicles(
       @Parameter(description = "Número de página (0-indexed)", example = "0")
           @RequestParam(defaultValue = "0")
           int page,

@@ -208,7 +208,7 @@ public class MaintenanceController {
       @Parameter(description = "ID del mantenimiento", required = true, example = "1") @PathVariable
           Long id,
       @Parameter(description = "Usuario que elimina el mantenimiento", example = "admin")
-          @RequestParam(required = false, defaultValue = "system")
+          @RequestHeader(value = "X-User", defaultValue = "system")
           String deletedBy) {
     deleteMaintenanceUseCase.execute(id, deletedBy);
     return ResponseEntity.noContent().build();
@@ -225,7 +225,7 @@ public class MaintenanceController {
             content = @Content(schema = @Schema(implementation = PageResult.class)))
       })
   @GetMapping
-  public ResponseEntity<PageResult<MaintenanceResponse>> getAllMaintenances(
+  public ResponseEntity<PageResult<MaintenanceResponse>> filterMaintenances(
       @Parameter(description = "Número de página (0-indexed)", example = "0")
           @RequestParam(defaultValue = "0")
           int page,

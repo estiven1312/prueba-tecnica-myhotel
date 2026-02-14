@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: reports-hr-project
+  datasource:
+    url: jdbc:mysql://localhost:3308/mydatabase?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: myuser
+    password: mypassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: false
+server:
+  servlet:
+    context-path: /api/v1

@@ -13,6 +13,18 @@ services:
     volumes:
       - my_hotel_db:/var/lib/mysql
       - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - reports_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
 volumes:
   my_hotel_db:
+
+networks:
+  reports_net:
+    driver: bridge

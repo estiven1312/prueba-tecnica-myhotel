@@ -100,7 +100,7 @@ public class ReportsController {
   }
 
   @Operation(
-      summary = "Gerentes con mas de N años",
+      summary = "Gerentes con más de N años",
       description = "Devuelve gerentes con antiguedad mayor al mínimo indicado.")
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Listado generado", content = @Content),

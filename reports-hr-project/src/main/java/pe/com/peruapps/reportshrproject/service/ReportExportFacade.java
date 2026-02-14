@@ -16,6 +16,10 @@ public class ReportExportFacade {
   public ReportExportFacade(List<ReportExportStrategy> strategies) {
     this.strategies = new EnumMap<>(ReportFormat.class);
     for (ReportExportStrategy strategy : strategies) {
+      if (this.strategies.containsKey(strategy.format())) {
+        throw new IllegalStateException(
+            "Multiple strategies found for format: " + strategy.format());
+      }
       this.strategies.put(strategy.format(), strategy);
     }
   }

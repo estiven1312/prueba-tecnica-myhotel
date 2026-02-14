@@ -55,8 +55,7 @@ public class UpdateVehicleUseCaseImpl implements UpdateVehicleUseCase {
             newLicensePlate,
             "Cannot update vehicle: License plate '"
                 + newLicensePlate
-                + "' is already registered to vehicle ID "
-                + existingVehicle.getId().value());
+                + "' is already registered a vehicle");
       }
     }
   }

@@ -133,7 +133,7 @@ public class XlsxExportService implements ReportExportStrategy {
       return row;
     }
     for (Object value : values) {
-      row.add(Optional.ofNullable(value).map(Object::toString).orElse(""));
+      row.add(Optional.ofNullable(value).orElse(""));
     }
     return row;
   }

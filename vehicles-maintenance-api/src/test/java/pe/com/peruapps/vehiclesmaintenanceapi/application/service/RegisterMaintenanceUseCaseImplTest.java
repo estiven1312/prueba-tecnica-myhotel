@@ -56,7 +56,7 @@ class RegisterMaintenanceUseCaseImplTest {
   }
 
   @Test
-  void givenValidCommand_whenExecute_thenMaintenanceIsRegistered() {
+  void givenValidCommandWhenExecuteThenMaintenanceIsRegistered() {
     // Given
     Maintenance savedMaintenance =
         Maintenance.builder()
@@ -84,7 +84,7 @@ class RegisterMaintenanceUseCaseImplTest {
   }
 
   @Test
-  void givenNonExistingVehicle_whenExecute_thenThrowsVehicleNotFoundException() {
+  void givenNonExistingVehicleWhenExecuteThenThrowsVehicleNotFoundException() {
     // Given
     when(vehicleRepositoryPort.findById(1L))
         .thenThrow(new VehicleNotFoundException(1L, "Vehicle not found"));
@@ -99,7 +99,7 @@ class RegisterMaintenanceUseCaseImplTest {
   }
 
   @Test
-  void givenValidCommand_whenExecute_thenAllFieldsAreMappedCorrectly() {
+  void givenValidCommandWhenExecuteThenAllFieldsAreMappedCorrectly() {
     // Given
     when(vehicleRepositoryPort.findById(1L)).thenReturn(vehicle);
     when(maintenanceRepositoryPort.save(any(Maintenance.class)))
@@ -129,7 +129,7 @@ class RegisterMaintenanceUseCaseImplTest {
   }
 
   @Test
-  void givenPastScheduledDate_whenExecute_thenThrowsIllegalArgumentException() {
+  void givenPastScheduledDateWhenExecuteThenThrowsIllegalArgumentException() {
     // Given
     RegisterMaintenanceCommand invalidCommand =
         new RegisterMaintenanceCommand(

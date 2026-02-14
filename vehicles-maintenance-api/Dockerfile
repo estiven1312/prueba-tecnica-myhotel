@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jre-alpine AS extractor
 
 WORKDIR /app
 
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract

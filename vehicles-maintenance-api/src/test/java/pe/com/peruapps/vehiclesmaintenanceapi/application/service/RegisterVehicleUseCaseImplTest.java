@@ -65,7 +65,7 @@ class RegisterVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenValidAutomobileCommand_whenExecute_thenAutomobileIsRegistered() {
+  void givenValidAutomobileCommandWhenExecuteThenAutomobileIsRegistered() {
     // Given
     Automobile savedAutomobile = new Automobile();
     savedAutomobile.setId(new Id(1L));
@@ -89,7 +89,7 @@ class RegisterVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenValidLorryCommand_whenExecute_thenLorryIsRegistered() {
+  void givenValidLorryCommandWhenExecuteThenLorryIsRegistered() {
     // Given
     Lorry savedLorry = new Lorry();
     savedLorry.setId(new Id(1L));
@@ -113,7 +113,7 @@ class RegisterVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenDuplicatedLicensePlate_whenExecute_thenThrowsDuplicatedLicensePlateException() {
+  void givenDuplicatedLicensePlateWhenExecuteThenThrowsDuplicatedLicensePlateException() {
     // Given
     Automobile existingVehicle = new Automobile();
     existingVehicle.setId(new Id(99L));
@@ -132,7 +132,7 @@ class RegisterVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenAutomobileCommand_whenExecute_thenAllFieldsAreMappedCorrectly() {
+  void givenAutomobileCommandWhenExecuteThenAllFieldsAreMappedCorrectly() {
     // Given
     when(vehicleRepositoryPort.findByLicensePlate(anyString())).thenReturn(Optional.empty());
     when(vehicleRepositoryPort.save(any(Automobile.class)))
@@ -165,7 +165,7 @@ class RegisterVehicleUseCaseImplTest {
   }
 
   @Test
-  void givenLorryCommand_whenExecute_thenAllFieldsAreMappedCorrectly() {
+  void givenLorryCommandWhenExecuteThenAllFieldsAreMappedCorrectly() {
     // Given
     when(vehicleRepositoryPort.findByLicensePlate(anyString())).thenReturn(Optional.empty());
     when(vehicleRepositoryPort.save(any(Lorry.class)))
